@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Rodriguez's Bloomingdale Quiz</title>
+    <style>
+        /* Updated CSS for button-like answers */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        #quiz-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #question-container {
+            margin-top: 20px;
+        }
+
+        .choice-button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .choice-button:hover {
+            background: #0056b3;
+        }
+
+        #feedback {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 5px solid #ccc;
+        }
+
+        #next-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        #next-button:disabled {
+            background: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Dr. Rodriguez's Bloomingdale Quiz</h1>
+        <div id="question-container"></div>
+        <button id="next-button">Next Question</button>
+        <div id="feedback"></div>
+    </div>
+    <script>
+        // Updated JavaScript for button-like answers
+        const questions = [
+    {
+        question: "When was Bloomingdale High School established?",
+        choices: [
+            "1987",
+            "1990",
+            "1985",
+            "1992"
+        ],
+        correctAnswer: 0,
+        explanation: "Bloomingdale High School was established in 1987, making it a part of Hillsborough County's educational legacy for decades."
+    },
+    {
+        question: "What is the mascot of Bloomingdale High School?",
+        choices: [
+            "Eagle",
+            "Bull",
+            "Tiger",
+            "Panther"
+        ],
+        correctAnswer: 1,
+        explanation: "The Bloomingdale Bulls are represented by their strong and enduring mascot, the Bull."
+    },
+    {
+        question: "What are the official school colors of Bloomingdale High School?",
+        choices: [
+            "Blue and Gold",
+            "Green and White",
+            "Red, White, and Black",
+            "Purple and Yellow"
+        ],
+        correctAnswer: 2,
+        explanation: "The school colors are red, white, and black, proudly displayed in school events and athletics."
+    },
+    {
+        question: "Who was the first principal of Bloomingdale High School?",
+        choices: [
+            "Marcos Rodriguez",
+            "Charley Harris",
+            "John Smith",
+            "Lisa Johnson"
+        ],
+        correctAnswer: 1,
+        explanation: "Charley Harris was the founding principal of Bloomingdale High School, and the football stadium is named in his honor."
+    },
+    {
+        question: "What is the name of Bloomingdale High School’s yearbook?",
+        choices: [
+            "The Minotaur",
+            "The Bull’s Eye",
+            "The Stampede",
+            "The Crimson Times"
+        ],
+        correctAnswer: 0,
+        explanation: "The yearbook, titled 'The Minotaur,' reflects the school's connection to its mascot and mythology."
+    },
+    {
+        question: "What is the name of the school newspaper?",
+        choices: [
+            "The Stampede",
+            "The Crimson Times",
+            "The Bull's Eye",
+            "The Daily Horn"
+        ],
+        correctAnswer: 1,
+        explanation: "'The Crimson Times' is the student-run newspaper at Bloomingdale High School."
+    },
+    {
+        question: "Which famous sportscaster is an alumna of Bloomingdale High School?",
+        choices: [
+            "Erin Andrews",
+            "Robin Roberts",
+            "Hannah Storm",
+            "Pam Oliver"
+        ],
+        correctAnswer: 0,
+        explanation: "Erin Andrews, a renowned sportscaster, graduated from Bloomingdale High School in 1996."
+    },
+    {
+        question: "Which actor, known for his role in 'All My Children,' graduated from Bloomingdale High School?",
+        choices: [
+            "Mark Consuelos",
+            "Brad Pitt",
+            "Tom Cruise",
+            "Matthew McConaughey"
+        ],
+        correctAnswer: 0,
+        explanation: "Mark Consuelos, who gained fame on 'All My Children,' is a 1989 graduate of Bloomingdale High School."
+    },
+    {
+        question: "Which professional golfer is an alumna of Bloomingdale High School?",
+        choices: [
+            "Beth Bauer",
+            "Annika Sörenstam",
+            "Michelle Wie",
+            "Lexi Thompson"
+        ],
+        correctAnswer: 0,
+        explanation: "Beth Bauer, a professional golfer, graduated from Bloomingdale High School in 1999."
+    },
+    {
+        question: "Which NFL player was a member of the first graduating class of Bloomingdale High School?",
+        choices: [
+            "Chad Bratzke",
+            "Peyton Manning",
+            "Tom Brady",
+            "J.J. Watt"
+        ],
+        correctAnswer: 0,
+        explanation: "Chad Bratzke, who went on to play in the NFL, was part of the first graduating class in 1989."
+    },
+    {
+        question: "What is the name of the school’s football stadium?",
+        choices: [
+            "Bull Arena",
+            "Charley Harris Stadium",
+            "Valrico Sports Field",
+            "The Red Zone"
+        ],
+        correctAnswer: 1,
+        explanation: "The football stadium is named Charley Harris Stadium after the school's first principal."
+    },
+    {
+        question: "What was the first year Bloomingdale High School had a graduating class?",
+        choices: [
+            "1987",
+            "1988",
+            "1989",
+            "1990"
+        ],
+        correctAnswer: 2,
+        explanation: "The first graduating class from Bloomingdale High School was in 1989, two years after the school opened."
+    },
+    {
+        question: "How many acres is the Bloomingdale High School campus?",
+        choices: [
+            "50 acres",
+            "78.87 acres",
+            "100 acres",
+            "60 acres"
+        ],
+        correctAnswer: 1,
+        explanation: "The Bloomingdale High School campus spans an impressive 78.87 acres."
+    },
+    {
+        question: "What state championship did the boys' soccer team win in 1995?",
+        choices: [
+            "Track and Field",
+            "Basketball",
+            "Soccer",
+            "Baseball"
+        ],
+        correctAnswer: 2,
+        explanation: "The boys' soccer team won the state championship in 1995, one of their multiple titles."
+    },
+    {
+        question: "In what year did the girls' soccer team win the state championship?",
+        choices: [
+            "1992",
+            "2001",
+            "1995",
+            "1998"
+        ],
+        correctAnswer: 1,
+        explanation: "The girls' soccer team won the state championship in 2001, adding to the school’s athletic achievements."
+    },
+    {
+        question: "What sport did the school win back-to-back state championships in 2008 and 2009?",
+        choices: [
+            "Cheerleading",
+            "Softball",
+            "Basketball",
+            "Swimming"
+        ],
+        correctAnswer: 0,
+        explanation: "The cheerleading squad won state championships in 2008 and 2009, showcasing their skill and teamwork."
+    },
+    {
+        question: "Which major academic focus does Bloomingdale High School promote?",
+        choices: [
+            "Engineering",
+            "STEM and Advanced Placement programs",
+            "Performing Arts",
+            "Environmental Sciences"
+        ],
+        correctAnswer: 1,
+        explanation: "Bloomingdale High School is known for its strong Advanced Placement and STEM offerings."
+    },
+    {
+        question: "What is Bloomingdale High School’s mission statement focus?",
+        choices: [
+            "Building community partnerships",
+            "Empowering students to succeed academically and socially",
+            "Fostering athletic excellence",
+            "Promoting environmental awareness"
+        ],
+        correctAnswer: 1,
+        explanation: "The school emphasizes empowering students to succeed both academically and socially."
+    },
+    {
+        question: "What annual event is a tradition at Bloomingdale High School?",
+        choices: [
+            "Homecoming Parade",
+            "Spring Carnival",
+            "Bull Bash",
+            "Senior Olympics"
+        ],
+        correctAnswer: 2,
+        explanation: "The Bull Bash is an annual tradition that brings the school community together for fun and celebration."
+    }
+]
+;
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const questionContainer = document.getElementById("question-container");
+        const feedbackContainer = document.getElementById("feedback");
+        const nextButton = document.getElementById("next-button");
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            questionContainer.innerHTML = `
+                <h2>${question.question}</h2>
+                ${question.choices.map((choice, index) => `
+                    <button class="choice-button" data-choice="${index}">${choice}</button>
+                `).join('')}
+            `;
+            feedbackContainer.innerHTML = "";
+            nextButton.style.display = "none";
+
+            const choiceButtons = document.querySelectorAll(".choice-button");
+            choiceButtons.forEach(button => {
+                button.addEventListener("click", (e) => {
+                    const userAnswer = parseInt(e.target.getAttribute("data-choice"));
+                    checkAnswer(userAnswer);
+                });
+            });
+        }
+
+        function checkAnswer(userAnswer) {
+            const question = questions[currentQuestion];
+            const isCorrect = userAnswer === question.correctAnswer;
+            feedbackContainer.innerHTML = `
+                <p>${isCorrect ? "Correct!" : "Incorrect."}</p>
+                <p>${isCorrect ? "" : `The correct answer is: ${question.choices[question.correctAnswer]}`}</p>
+                <p>${question.explanation}</p>
+            `;
+            if (isCorrect) score++;
+            nextButton.style.display = "block";
+
+            // Disable buttons after selecting an answer
+            const choiceButtons = document.querySelectorAll(".choice-button");
+            choiceButtons.forEach(button => button.disabled = true);
+        }
+
+        nextButton.addEventListener("click", () => {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                questionContainer.innerHTML = `
+                    <h2>Quiz Complete!</h2>
+                    <p>Your Score: ${score} / ${questions.length}</p>
+                `;
+                nextButton.style.display = "none";
+            }
+        });
+
+        // Load the first question on startup
+        loadQuestion();
+    </script>
+</body>
+</html>
